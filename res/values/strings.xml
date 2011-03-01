@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, F2011!</string>
+    <string name="app_name">F2011</string>
+    <string name="settings_label">Indstillinger...</string>
+    <string name="settings_title">Indstillinger</string>
+    <string name="player_name">Brugernavn</string>
+    <string name="logon_success">Tillykke du er logget ind som \'%s\'</string>
+    <string name="logon_failure">Kunne ikke logge dig ind</string>
+    <string name="password">Adgangskode</string>
+    <string name="password_hint">********</string>
+    <string name="remember_me">Husk mig</string>
+    <string name="remember_me_hint">Så skal du kunne logge ind én gang</string>
+</resources>

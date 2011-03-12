@@ -9,7 +9,18 @@
 		android:id="@+id/driver"
 		android:layout_height="wrap_content" 
 		android:layout_width="wrap_content"
+		android:src="@drawable/felipe_massa"
 		/>
+	<ImageView
+			android:id="@+id/grid_image_1" 
+		android:layout_height="wrap_content" 
+		android:layout_width="wrap_content"
+			android:src="@drawable/felipe_massa"/>
+		<TextView android:text="M. Schumacher"
+			android:paddingLeft="10dip"
+			android:gravity="center_vertical"
+			style="@style/CodeFont" />
+	
 	<TextView
 		android:id="@+id/swipe"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"/>

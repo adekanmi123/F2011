@@ -11,4 +11,5 @@
     <string name="password_hint">********</string>
     <string name="remember_me">Husk mig</string>
     <string name="remember_me_hint">Så skal du kunne logge ind én gang</string>
+    <string name="game_closed">Der kan ikke længere afgives bud på dette løb</string>
 </resources>

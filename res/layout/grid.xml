@@ -3,39 +3,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:gravity="left">
-		<ImageView
-			android:id="@+id/grid_image_1" 
-			android:layout_height="wrap_content" 
-			android:layout_width="fill_parent"
-			android:src="@drawable/felipe_massa"
-			android:gravity="center"/>
-		<TextView android:text="M. Schumacher"
-			android:paddingLeft="10dip"
-			android:layout_height="fill_parent"
-			android:gravity="center_vertical"
-			style="@style/CodeFont" />
-    </LinearLayout>
-    <LinearLayout
-      android:orientation="horizontal"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:gravity="right">
-		<TextView android:text="M. Schumacher"
-			android:paddingLeft="10dip"
-			android:layout_height="fill_parent"
-			android:layout_width="wrap_content"
-			android:gravity="center_vertical"
-			style="@style/CodeFont" />
-		<ImageView
-			android:id="@+id/grid_image_2" 
-			android:layout_height="wrap_content" 
-			android:layout_width="wrap_content"
-			android:src="@drawable/felipe_massa"
-			android:gravity="center_vertical"/>
-    </LinearLayout>
+	<TextView 
+		style="@style/HeaderStyle"
+		android:text="Qualify"/>
+	<ScrollView>
+		<!
+	</ScrollView>
 </LinearLayout>

@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="libs/f2007-client-domain.jar"/>
+	<classpathentry kind="lib" path="libs/gson-1.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

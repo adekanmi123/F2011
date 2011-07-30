@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-   	android:gravity="center"
-    >
+   	android:gravity="center">
 	<ImageView 
-		android:id="@+id/driver"
-		android:layout_height="wrap_content" 
-		android:layout_width="wrap_content"
-		android:src="@drawable/felipe_massa"
+		android:id="@+id/splash"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+		android:src="@drawable/splash"
+		android:scaleType="fitXY"
 		/>
-	<ImageView
-			android:id="@+id/grid_image_1" 
-		android:layout_height="wrap_content" 
-		android:layout_width="wrap_content"
-			android:src="@drawable/felipe_massa"/>
-		<TextView android:text="M. Schumacher"
-			android:paddingLeft="10dip"
-			android:gravity="center_vertical"
-			style="@style/CodeFont" />
-	
-	<TextView
-		android:id="@+id/swipe"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"/>
-</LinearLayout>
+	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:padding="30dip"
+		android:gravity="center_horizontal|top"
+		android:visibility="invisible">
+		<Button android:id="@+id/participate"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textStyle="bold"
+	            android:text="@string/participate_button"/>
+	</LinearLayout>
+	<eu.loopit.f2011.view.TypeFaceTextView android:id="@+id/message"
+			  style="@style/CodeFont"  
+              android:gravity="center_horizontal|top"
+              android:padding="30dip"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+	<eu.loopit.f2011.view.TypeFaceTextView android:id="@+id/seasonName" 
+			  style="@style/CodeFont"  
+		      android:layout_height="fill_parent"
+              android:gravity="center_horizontal|bottom"
+              android:paddingBottom="20dip"
+              android:textSize="48sp"/>
+</AbsoluteLayout>

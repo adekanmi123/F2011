@@ -3,13 +3,23 @@
     <string name="hello">Hello World, F2011!</string>
     <string name="app_name">F2011</string>
     <string name="settings_label">Indstillinger...</string>
+    <string name="error_label">Fejl opstået</string>
+    <string name="exit_label">Afslut</string>
+    <string name="refresh_label">Genindlæs</string>
     <string name="settings_title">Indstillinger</string>
     <string name="player_name">Brugernavn</string>
-    <string name="logon_success">Tillykke du er logget ind som \'%s\'</string>
+    <string name="logon_success">Tillykke %s, du er nu logget ind</string>
     <string name="logon_failure">Kunne ikke logge dig ind</string>
+    <string name="communication_failure">Kunne ikke kontakte serveren</string>
     <string name="password">Adgangskode</string>
     <string name="password_hint">********</string>
     <string name="remember_me">Husk mig</string>
     <string name="remember_me_hint">Så skal du kunne logge ind én gang</string>
-    <string name="game_closed">Der kan ikke længere afgives bud på dette løb</string>
+    <string name="game_closed">Der kan ikke længere afgives bud på %s</string>
+    <string name="game_already_played">Du har allerede spillet på %s</string>
+    <string name="game_waiting">%s er ikke åbn endnu</string>
+    <string name="game_season_closed">Denne sæson er afsluttet. Kom tilbage næste år!</string>
+    <string name="get_season_failure">Sæsonen kunne ikke hentes</string>
+    <string name="participate_button">Jeg skal deltage</string>
+    <string name="label_ok">OK</string>
 </resources>

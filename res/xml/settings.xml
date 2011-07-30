@@ -6,13 +6,18 @@
   	android:key="player_name"
   	android:title="@string/player_name"
   	android:maxLength="12"
-  	android:maxLines="1"
+  	android:singleLine="true" 
+  	android:imeOptions="actionGo"
+  	
   	/>
   <EditTextPreference 
+  	android:id="@+id/password"
   	android:key="password"
   	android:title="@string/password"
   	android:password="true"
-  	android:maxLines="1"
+  	android:singleLine="true" 
+  	android:imeOptions="actionGo"
+  	android:persistent="false" 
   	/>
   <CheckBoxPreference
   	android:key="remember_me"

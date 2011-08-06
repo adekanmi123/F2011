@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-   	android:gravity="center">
-	<ImageView 
-		android:id="@+id/splash"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-		android:src="@drawable/splash"
-		android:scaleType="fitXY"
-		/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="center"
+	android:background="@drawable/splash">
 	<LinearLayout 
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-        android:padding="30dip"
-		android:gravity="center_horizontal|top"
-		android:visibility="invisible">
+		android:orientation="vertical" 
+		android:padding="20dip" 
+		android:gravity="top|center_horizontal"
+		android:layout_height="160dp">
+		<eu.loopit.f2011.view.TypeFaceTextView
+			android:id="@+id/race" 
+			style="@style/CodeFont" 
+			android:gravity="center_horizontal"
+			android:paddingBottom="20dip"
+			android:textSize="24sp" 
+			android:textStyle="bold" />
+		<eu.loopit.f2011.view.TypeFaceTextView
+			android:id="@+id/message" 
+			style="@style/CodeFont" 
+			android:textSize="20sp" 
+			android:textStyle="bold" 
+			android:gravity="center_horizontal"/>
 		<Button android:id="@+id/participate"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:textStyle="bold"
-	            android:text="@string/participate_button"/>
+			android:textStyle="bold" 
+			android:visibility="gone" 
+			android:text="@string/participate_button"
+			android:textSize="20sp"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"/>
 	</LinearLayout>
-	<eu.loopit.f2011.view.TypeFaceTextView android:id="@+id/message"
-			  style="@style/CodeFont"  
-              android:gravity="center_horizontal|top"
-              android:padding="30dip"
-              android:textSize="24sp"
-              android:textStyle="bold"/>
-	<eu.loopit.f2011.view.TypeFaceTextView android:id="@+id/seasonName" 
-			  style="@style/CodeFont"  
-		      android:layout_height="fill_parent"
-              android:gravity="center_horizontal|bottom"
-              android:paddingBottom="20dip"
-              android:textSize="48sp"/>
-</AbsoluteLayout>
+	<eu.loopit.f2011.view.TypeFaceTextView
+		android:id="@+id/seasonName" style="@style/CodeFont"
+		android:layout_height="fill_parent" android:gravity="center_horizontal|bottom"
+		android:paddingBottom="20dip" android:textSize="48sp" />
+</RelativeLayout>

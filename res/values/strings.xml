@@ -2,7 +2,7 @@
 <resources>
     <string name="hello">Hello World, F2011!</string>
     <string name="app_name">F2011</string>
-    <string name="settings_label">Indstillinger...</string>
+    <string name="settings_label">Indstillinger</string>
     <string name="error_label">Fejl opstået</string>
     <string name="exit_label">Afslut</string>
     <string name="refresh_label">Genindlæs</string>
@@ -15,11 +15,22 @@
     <string name="password_hint">********</string>
     <string name="remember_me">Husk mig</string>
     <string name="remember_me_hint">Så skal du kunne logge ind én gang</string>
-    <string name="game_closed">Der kan ikke længere afgives bud på %s</string>
-    <string name="game_already_played">Du har allerede spillet på %s</string>
-    <string name="game_waiting">%s er ikke åbn endnu</string>
+    <string name="game_closed">Der kan ikke længere afgives bud</string>
+    <string name="game_already_played">Du har allerede spillet</string>
+    <string name="game_waiting">Spillet er ikke åbent endnu</string>
     <string name="game_season_closed">Denne sæson er afsluttet. Kom tilbage næste år!</string>
     <string name="get_season_failure">Sæsonen kunne ikke hentes</string>
     <string name="participate_button">Jeg skal deltage</string>
     <string name="label_ok">OK</string>
+    <string name="grid.title">Vælg start grid</string>
+    <string name="fastestLap.title">Vælg hurtigste kører</string>
+    <string name="podium.title">Vælg podium</string>
+    <string name="previous">Forrige</string>
+    <string name="next">Næste</string>
+    <string name="no_driver.title">Ikke valgt</string>
+    
+    <string name="select_driver.title">Vælg kører</string>
+    <string name="error.title">Fejl</string>
+    <string name="error.dublicate">Den samme kører må kun være valgt et sted</string>
+    <string name="error.notSelected">Ikke alle positioner er valgt</string>
 </resources>

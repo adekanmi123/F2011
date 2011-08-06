@@ -8,13 +8,13 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -27,31 +27,25 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import eu.loopit.f2011.F2011;
+import eu.loopit.f2011.F2011Application;
+import eu.loopit.f2011.WelcomeActivity;
 
-public class RestHelper <T> {
+public class RestHelper {
 	
-	private String authorizationToken;
-	private String baseURL = "http://formel1.loopit.eu/ws";
+	private String baseURL;
 	private Gson gson;
+	private F2011Application application;
 	
-	public RestHelper() {
-		if ("sdk".equals(Build.PRODUCT)) {
-			baseURL = "http://10.0.2.2:8080/web/ws";
-		}
+	public RestHelper(F2011Application application) {
+		baseURL = application.getBaseURL() + "/ws";
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Date.class, new DateTimeHandler());
 		gson = builder.create();
-		//Default no security
+		this.application = application;
 	}
 	
-	public RestHelper(String authorizationToken) {
-		this();
-		this.authorizationToken = authorizationToken;
-	}
-
 	@SuppressWarnings("unchecked")
-	public T getJSONData(String url, Class<T> clazz) {
+	public <T> T getJSONData(String url, Class<T> clazz) {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		URI uri;
 		long start = System.currentTimeMillis();
@@ -59,8 +53,8 @@ public class RestHelper <T> {
 			uri = new URI(url);
 			HttpGet method = new HttpGet(baseURL + uri);
 			method.setHeader("Accept", "application/json");
-			if (authorizationToken != null) {
-				method.setHeader("Authorization", "Basic " + authorizationToken);
+			if (application.getToken() != null) {
+				method.setHeader("Authorization", "Basic " + application.getToken());
 			}
 			HttpResponse response = httpClient.execute(method);
 			if (response.getStatusLine().getStatusCode() == 200 || response.getStatusLine().getStatusCode() == 201) {
@@ -71,16 +65,47 @@ public class RestHelper <T> {
 					return (T) readReponseAsString(response.getEntity());
 				}
 			} else {
-				Log.i(F2011.TAG, "Http request did not succeed. Status: " + response.getStatusLine());
+				Log.i(WelcomeActivity.TAG, "Http request did not succeed. Status: " + response.getStatusLine());
 				throw new RestException(response.getStatusLine().toString());
 			}
 
 		} catch (Exception e) {
-			Log.e(F2011.TAG, "Could not get URL: " + baseURL + url, e);
+			Log.e(WelcomeActivity.TAG, "Could not get URL: " + baseURL + url, e);
 			throw new IllegalStateException("Could not perform GET request to URL: " + baseURL + url, e);
 		} finally {
-			if (Log.isLoggable(F2011.TAG, Log.INFO)) {
-				Log.i(F2011.TAG, String.format("%s took %d ms to call and deserialize", url, (System.currentTimeMillis() - start)));
+			if (Log.isLoggable(WelcomeActivity.TAG, Log.INFO)) {
+				Log.i(WelcomeActivity.TAG, String.format("%s took %d ms to call and deserialize", url, (System.currentTimeMillis() - start)));
+			}
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getJSONData(String url, Class<T> clazz, Type type) {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		URI uri;
+		long start = System.currentTimeMillis();
+		try {
+			uri = new URI(url);
+			HttpGet method = new HttpGet(baseURL + uri);
+			method.setHeader("Accept", "application/json");
+			if (application.getToken() != null) {
+				method.setHeader("Authorization", "Basic " + application.getToken());
+			}
+			HttpResponse response = httpClient.execute(method);
+			if (response.getStatusLine().getStatusCode() == 200 || response.getStatusLine().getStatusCode() == 201) {
+				Reader r = new InputStreamReader(response.getEntity().getContent());
+				return (List<T>) gson.fromJson(r, type);
+			} else {
+				Log.i(WelcomeActivity.TAG, "Http request did not succeed. Status: " + response.getStatusLine());
+				throw new RestException(response.getStatusLine().toString());
+			}
+			
+		} catch (Exception e) {
+			Log.e(WelcomeActivity.TAG, "Could not get URL: " + baseURL + url, e);
+			throw new IllegalStateException("Could not perform GET request to URL: " + baseURL + url, e);
+		} finally {
+			if (Log.isLoggable(WelcomeActivity.TAG, Log.INFO)) {
+				Log.i(WelcomeActivity.TAG, String.format("%s took %d ms to call and deserialize", url, (System.currentTimeMillis() - start)));
 			}
 		}
 	}

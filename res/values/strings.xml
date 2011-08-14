@@ -22,15 +22,27 @@
     <string name="get_season_failure">Sæsonen kunne ikke hentes</string>
     <string name="participate_button">Jeg skal deltage</string>
     <string name="label_ok">OK</string>
-    <string name="grid.title">Vælg start grid</string>
-    <string name="fastestLap.title">Vælg hurtigste kører</string>
-    <string name="podium.title">Vælg podium</string>
+    <string name="grid.title">Start grid</string>
+    <string name="fastestLap.title">Hurtigste kører</string>
+    <string name="podium.title">Podium</string>
+    <string name="selected_driver.title">Udvalgte kører</string>
+    <string name="first_crash.title">Først udgåede</string>
+    <string name="pole_position.title">Pole position tid</string>
     <string name="previous">Forrige</string>
     <string name="next">Næste</string>
     <string name="no_driver.title">Ikke valgt</string>
     
     <string name="select_driver.title">Vælg kører</string>
+    <string name="select_position.title">Vælg position</string>
     <string name="error.title">Fejl</string>
     <string name="error.dublicate">Den samme kører må kun være valgt et sted</string>
     <string name="error.notSelected">Ikke alle positioner er valgt</string>
+    <string name="error.notCorrectly">%s er ikke korrekt udfyldt</string>
+    <string name="starts_at">Start placering</string>
+    <string name="ends_at">Slut placering</string>
+    <string name="pole_position">Tid</string>
+    <string name="submit">Indsend bud</string>
+    <string name="label.minutes">Minutter</string>
+    <string name="label.seconds">Sekunder</string>
+    <string name="label.thousands">Tusindedele</string>
 </resources>

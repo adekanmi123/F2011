@@ -14,6 +14,11 @@
         </activity>
     	<activity android:name=".Preferences" android:label="@string/settings_title"/>
     	<activity android:name=".GridActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".FastestDriverActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".PodiumActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".SelectedDriverActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".FirstCrashActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-sdk android:minSdkVersion="8" />

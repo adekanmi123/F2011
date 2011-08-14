@@ -68,6 +68,10 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 		return activeDrivers.get(index);
 	}
 	
+	public String getDriverImageURL(ClientDriver driver) {
+		return getBaseURL() + "/mobile/drivers/" + driver.getName().replace(" ", "%20")+".png";
+	}
+	
 	public AlertDialog getDriverDialog(Context context, OnClickListener listener) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(getString(R.string.select_driver_title))
@@ -79,12 +83,6 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 		return bid;
 	}
 	
-	public Intent getGridIntent() {
-		Intent intent = new Intent(this, GridActivity.class);
-		intent.putExtra("type", GRID);
-		return intent;
-	}
-
 	@Override
 	public void onCreate() {
 		super.onCreate();

@@ -41,6 +41,16 @@ public class Validator {
 		return true;
 	}
 	
+	public boolean validateNumber(String label, String number) {
+		try {
+			Integer.parseInt(number);
+		} catch (NumberFormatException e) {
+			showError(context.getString(R.string.error_notCorrectly, label));
+			return false;
+		}
+		return true;
+	}
+	
 	private void showError(String errorMessage) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(errorMessage)

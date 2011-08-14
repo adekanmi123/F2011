@@ -3,17 +3,21 @@ package eu.loopit.f2011;
 import android.content.Intent;
 import dk.bregnvig.formula1.client.domain.ClientDriver;
 
-public class GridActivity extends DriverActivity {
-	
-	
+public class PodiumActivity extends DriverActivity {
+
+	@Override
+	ClientDriver[] getDrivers() {
+		return getF2011Application().getBid().getPodium();
+	}
+
 	@Override
 	Intent getNextIntent() {
-		return new Intent(this, FastestDriverActivity.class);
+		return null;
 	}
 
 	@Override
 	Intent getPreviousIntent() {
-		Intent intent = new Intent(this, WelcomeActivity.class);
+		Intent intent = new Intent(this, FastestDriverActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		return intent;
@@ -21,12 +25,7 @@ public class GridActivity extends DriverActivity {
 
 	@Override
 	String getActivityTitle() {
-		return getString(R.string.grid_title);
-	}
-
-	@Override
-	ClientDriver[] getDrivers() {
-		return getF2011Application().getBid().getGrid();
+		return getString(R.string.podium_title);
 	}
 
 }

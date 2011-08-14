@@ -2,8 +2,6 @@ package eu.loopit.f2011;
 
 import java.util.List;
 
-import com.google.gson.reflect.TypeToken;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -17,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.gson.reflect.TypeToken;
+
 import dk.bregnvig.formula1.client.domain.ClientDriver;
 import dk.bregnvig.formula1.client.domain.ClientRace;
 import eu.loopit.f2011.util.RestHelper;
@@ -41,7 +42,7 @@ public class WelcomeActivity extends BaseActivity {
 		
 		participateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(getF2011Application().getGridIntent());
+				startActivity(new Intent(WelcomeActivity.this, PolePositionActivity.class));
 			}
 		});
 	}
@@ -50,6 +51,12 @@ public class WelcomeActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		getGameData();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		Log.i(TAG, "New intent received");
 	}
 
 	@Override

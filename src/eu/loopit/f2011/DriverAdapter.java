@@ -19,14 +19,12 @@ public class DriverAdapter extends ArrayAdapter<ClientDriver> {
 	private BitmapManager imageManager;
 	private F2011Application application;
 	private Bitmap defaultImage;
-	private String baseURL;
 	
 	public DriverAdapter(Context context, int textViewResourceId, ClientDriver[] objects) {
 		super(context, textViewResourceId, objects);
 		this.drivers = objects;
 		imageManager = new BitmapManager(context);
 		application = ((BaseActivity)context).getF2011Application(); 
-		baseURL = application.getBaseURL() + "/mobile/drivers";
 		defaultImage = BitmapFactory.decodeResource(application.getResources(), R.drawable.unknown);
 	}
 
@@ -53,7 +51,7 @@ public class DriverAdapter extends ArrayAdapter<ClientDriver> {
 	        txtView.setText(driver.getName());
 	        ImageView image = (ImageView) view.findViewById(R.id.driverImage);
 	        if (driver != application.getNoDriver()) {
-	        	imageManager.fetchBitmapOnThread(baseURL+"/"+driver.getName().replace(" ", "%20")+".png", image, defaultImage);
+	        	imageManager.fetchBitmapOnThread(application.getDriverImageURL(driver), image, defaultImage);
 	        } else {
 	        	image.setImageResource(R.drawable.unknown);
 	        }

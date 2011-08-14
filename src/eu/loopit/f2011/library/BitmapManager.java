@@ -99,7 +99,9 @@ public class BitmapManager {
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message message) {
-				imageView.setImageBitmap((Bitmap) message.obj);
+				if (message.obj != null) {
+					imageView.setImageBitmap((Bitmap) message.obj);
+				}
 			}
 		};
 

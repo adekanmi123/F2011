@@ -6,19 +6,20 @@
     <application android:icon="@drawable/trophy_icon" android:label="@string/app_name" android:name=".F2011Application">
         <activity android:name=".WelcomeActivity"
                   android:label="@string/app_name"
-                  android:theme="@android:style/Theme.NoTitleBar">
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    	<activity android:name=".Preferences" android:label="@string/settings_title"/>
-    	<activity android:name=".GridActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	<activity android:name=".FastestDriverActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	<activity android:name=".PodiumActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	<activity android:name=".SelectedDriverActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	<activity android:name=".FirstCrashActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".Preferences" android:label="@string/settings_title" android:screenOrientation="portrait"/>
+    	<activity android:name=".GridActivity" android:theme="@android:style/Theme.NoTitleBar"  android:screenOrientation="portrait"/>
+    	<activity android:name=".FastestDriverActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
+    	<activity android:name=".PodiumActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
+    	<activity android:name=".SelectedDriverActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
+    	<activity android:name=".FirstCrashActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
+    	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-sdk android:minSdkVersion="8" />

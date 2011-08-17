@@ -25,6 +25,7 @@ import eu.loopit.f2011.util.RestHelper;
 public class WelcomeActivity extends BaseActivity {
 
 	public static final String TAG = WelcomeActivity.class.getSimpleName();
+	public static final String FORCE_REFRESH = "forceRefresh";
 	private TextView seasonName;
 	private TextView race;
 	private TextView message;
@@ -42,7 +43,7 @@ public class WelcomeActivity extends BaseActivity {
 		
 		participateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(new Intent(WelcomeActivity.this, PolePositionActivity.class));
+				startActivity(new Intent(WelcomeActivity.this, GridActivity.class));
 			}
 		});
 	}
@@ -56,7 +57,10 @@ public class WelcomeActivity extends BaseActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		Log.i(TAG, "New intent received");
+		if (intent.getBooleanExtra(FORCE_REFRESH, false) == true) {
+			Log.i(TAG, "Forcing refresh of game data");
+			refreshGameData();
+		}
 	}
 
 	@Override
@@ -76,8 +80,7 @@ public class WelcomeActivity extends BaseActivity {
 			finish();
 			return true;
 		case R.id.refresh:
-			getF2011Application().setCurrentRace(null);
-			getGameData();
+			refreshGameData();
 			return true;
 		}
 		return false;
@@ -110,6 +113,13 @@ public class WelcomeActivity extends BaseActivity {
 		} else if (getF2011Application().isLoggedIn() && getF2011Application().getCurrentRace() == null) {
 			new InitiateRaceTask().execute();
 		}
+	}
+	
+
+	private void refreshGameData() {
+		participateButton.setVisibility(View.INVISIBLE);
+		getF2011Application().setCurrentRace(null);
+		getGameData();
 	}
 
 	private class InitiateRaceTask extends AsyncTask<Void, Void, ClientRace> {
@@ -159,7 +169,7 @@ public class WelcomeActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			if (result != null) {
-				seasonName.setText(result);
+				seasonName.setText(result.trim());
 				if (getF2011Application().isLoggedIn()) {
 					new InitiateRaceTask().execute();
 				} else {

@@ -5,6 +5,8 @@ import eu.loopit.f2011.library.BitmapManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,8 +28,13 @@ public class SelectedDriverActivity extends BaseActivity {
 		
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, getPositions());
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		OnItemSelectedListener positionListener = new PositionSelected();
 		startsFrom.setAdapter(adapter);
+		startsFrom.setOnItemSelectedListener(positionListener);
+		startsFrom.setSelection(getF2011Application().getBid().getSelectedDriver()[0]-1);
 		endsAt.setAdapter(adapter);
+		endsAt.setOnItemSelectedListener(positionListener);
+		endsAt.setSelection(getF2011Application().getBid().getSelectedDriver()[1]-1);
 		BitmapManager manager = new BitmapManager(this);
 		ClientDriver selectedDriver = getF2011Application().getCurrentRace().getSelectedDriver();
 		manager.fetchBitmapOnThread(
@@ -69,5 +76,16 @@ public class SelectedDriverActivity extends BaseActivity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		return intent;
 	}
+	
+	private class PositionSelected implements OnItemSelectedListener {
+
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			int index = parent == startsFrom ? 0 : 1;
+			getF2011Application().getBid().getSelectedDriver()[index] = position + 1;
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+	};
 
 }

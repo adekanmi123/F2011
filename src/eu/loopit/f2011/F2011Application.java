@@ -1,5 +1,6 @@
 package eu.loopit.f2011;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	
 	private SharedPreferences prefs;
 	private ClientRace currentRace;
-	private List<ClientDriver> activeDrivers;
+	private List<ClientDriver> activeDrivers = Collections.emptyList();
 	private String[] driverNames;
 	private ClientBid bid = new ClientBid();
 
@@ -56,6 +57,10 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 			for (int i = 0; i < activeDrivers.size(); i++) {
 				driverNames[i] = activeDrivers.get(i).getName();
 			}
+		}
+		if (isTest()) {
+			Log.i(TAG, "Initializing the bid again, since we are in test mode, and we need the drivers initalized");
+			initializeBid();
 		}
 	}
 	
@@ -94,19 +99,22 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 		NO_DRIVER = new ClientDriver();
 		NO_DRIVER.setName(getString(R.string.no_driver_title));
 		
-		
+		initializeBid();
+	}
+
+	private void initializeBid() {
 		bid.setGrid(getDriverArray(6));
-		bid.setFastestLap(getNoDriver());
+		bid.setFastestLap(getDriver(0));
 		bid.setPodium(getDriverArray(3));
-		bid.setSelectedDriver(new int[2]);
-		bid.setFirstCrash(getNoDriver());
+		bid.setSelectedDriver(new int[] {1,1});
+		bid.setFirstCrash(getDriver(0));
 		bid.setPolePositionTime(0);
 	}
 	
 	private ClientDriver[] getDriverArray(int size) {
 		ClientDriver[] drivers = new ClientDriver[size];
 		for (int i = 0; i < drivers.length; i++) {
-			drivers[i] = getNoDriver();
+			drivers[i] = getDriver(i);
 		}
 		return drivers;
 	}
@@ -151,10 +159,14 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	}
 	
 	public String getBaseURL() {
-		if ("sdk".equals(Build.PRODUCT)) {
+		if (isTest()) {
 			return "http://10.0.2.2:8080/f2007";
 		}
 		return "http://formel1.loopit.eu";
+	}
+
+	public boolean isTest() {
+		return "sdk".equals(Build.PRODUCT);
 	}
 	
 	public boolean isLoggedIn() {
@@ -181,6 +193,10 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	
 	private boolean isBlankOrNull(String value) {
 		return value == null || value.length() == 0;
+	}
+	
+	private ClientDriver getDriver(int location) {
+		return isTest() && activeDrivers.size() > location ? activeDrivers.get(location) : NO_DRIVER;
 	}
 	
 	private void displayPlayerResult(String text) {

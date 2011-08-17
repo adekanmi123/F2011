@@ -12,7 +12,7 @@ public class PodiumActivity extends DriverActivity {
 
 	@Override
 	Intent getNextIntent() {
-		return null;
+		return new Intent(this, SelectedDriverActivity.class);
 	}
 
 	@Override

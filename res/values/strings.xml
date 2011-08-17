@@ -20,6 +20,7 @@
     <string name="game_waiting">Spillet er ikke åbent endnu</string>
     <string name="game_season_closed">Denne sæson er afsluttet. Kom tilbage næste år!</string>
     <string name="get_season_failure">Sæsonen kunne ikke hentes</string>
+    <string name="bid_submitted">Dit bud er modtaget!</string>
     <string name="participate_button">Jeg skal deltage</string>
     <string name="label_ok">OK</string>
     <string name="grid.title">Start grid</string>

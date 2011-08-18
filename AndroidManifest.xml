@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="eu.loopit.f2011"
-      android:versionCode="3"
-      android:versionName="1.1.0">
+      android:versionCode="4"
+      android:versionName="1.2.0">
     <application android:icon="@drawable/trophy_icon" android:label="@string/app_name" android:name=".F2011Application">
         <activity android:name=".WelcomeActivity"
                   android:label="@string/app_name"
@@ -22,6 +22,6 @@
     	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="3" />
 
 </manifest> 

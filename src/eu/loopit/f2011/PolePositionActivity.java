@@ -22,6 +22,8 @@ public class PolePositionActivity extends BaseActivity {
 	private EditText seconds;
 	private EditText thousands;
 	
+	private Button submit;
+	
 	private Validator validator;
 
 	@Override
@@ -56,8 +58,8 @@ public class PolePositionActivity extends BaseActivity {
 				startActivity(getPreviousIntent());
 			}
 		});
-		Button next = (Button) findViewById(R.id.submit);
-		next.setOnClickListener(new View.OnClickListener() {
+		submit = (Button) findViewById(R.id.submit);
+		submit.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				submitBid();
 			}
@@ -65,10 +67,12 @@ public class PolePositionActivity extends BaseActivity {
 	}
 	
 	private void submitBid() {
+		if (submit.isEnabled() == false) return; //Do not submit twice
 		boolean result = validator.validateNumber(getString(R.string.label_minutes), minutes.getText().toString());
 		if (result) result = validator.validateNumber(getString(R.string.label_seconds), seconds.getText().toString());
 		if (result) result = validator.validateNumber(getString(R.string.label_thousands), thousands.getText().toString());
 		getF2011Application().getBid().setPolePositionTime(getPolePoistionTime());
+		submit.setEnabled(false);
 		if (result) new SubmitTask().execute();
 	}
 	
@@ -100,7 +104,7 @@ public class PolePositionActivity extends BaseActivity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			helper.postJSONData(String.format("/race"), getF2011Application().getBid(), Void.class);
+			helper.postJSONData(String.format("/bid"), getF2011Application().getBid(), Void.class);
 			return null;
 		}
 
@@ -109,8 +113,6 @@ public class PolePositionActivity extends BaseActivity {
 			Toast.makeText(PolePositionActivity.this, getString(R.string.bid_submitted), Toast.LENGTH_LONG).show();
 			startActivity(getNextIntent());
 		}
-		
-		
 	}
 	
 	private class ActionListener implements OnEditorActionListener {

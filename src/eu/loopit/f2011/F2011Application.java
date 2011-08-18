@@ -14,13 +14,13 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 import dk.bregnvig.formula1.client.domain.ClientDriver;
 import dk.bregnvig.formula1.client.domain.ClientPlayer;
 import dk.bregnvig.formula1.client.domain.ClientRace;
 import dk.bregnvig.formula1.client.domain.bid.ClientBid;
+import eu.loopit.f2011.util.Base64Coder;
 import eu.loopit.f2011.util.CommunicationException;
 import eu.loopit.f2011.util.RestHelper;
 
@@ -213,7 +213,7 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 			ClientPlayer player = null;
 			try {
 				player = helper.getJSONData(String.format("/login/%s/%s", params[0], params[1]), ClientPlayer.class);
-				String authorizationToken = Base64.encodeToString((player.getPlayername()+":"+player.getToken()).getBytes(), Base64.NO_WRAP);
+				String authorizationToken = Base64Coder.encodeString(player.getPlayername()+":"+player.getToken());
 				prefs.edit().putBoolean(LOGGED_IN, true).putString(AUTORIZATION_TOKEN, authorizationToken).commit();
 			} catch (Exception e) {
 				storedException = e;

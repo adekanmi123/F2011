@@ -1,5 +1,12 @@
 package eu.loopit.f2011;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +27,7 @@ import dk.bregnvig.formula1.client.domain.ClientDriver;
 import dk.bregnvig.formula1.client.domain.ClientPlayer;
 import dk.bregnvig.formula1.client.domain.ClientRace;
 import dk.bregnvig.formula1.client.domain.bid.ClientBid;
+import dk.bregnvig.formula1.client.domain.wbc.ClientWBCEntry;
 import eu.loopit.f2011.util.Base64Coder;
 import eu.loopit.f2011.util.CommunicationException;
 import eu.loopit.f2011.util.RestHelper;
@@ -27,6 +35,7 @@ import eu.loopit.f2011.util.RestHelper;
 public class F2011Application extends Application implements OnSharedPreferenceChangeListener{
 	
 	
+	private static final String BID_SUFFIX = ".bid";
 	private static final String TAG =  F2011Application.class.getSimpleName();
 	private static final String PLAYER_NAME = "player_name";
 	private static final String PASSWORD = "password";
@@ -43,9 +52,23 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	private SharedPreferences prefs;
 	private ClientRace currentRace;
 	private List<ClientDriver> activeDrivers = Collections.emptyList();
+	private List<ClientWBCEntry> wbcEntries = new ArrayList<ClientWBCEntry>();
 	private String[] driverNames;
-	private ClientBid bid = new ClientBid();
+	private ClientBid bid;
 
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		resetCredentials();
+		prefs.registerOnSharedPreferenceChangeListener(this);
+		printPrefs();
+		
+		NO_DRIVER = new ClientDriver();
+		NO_DRIVER.setName(getString(R.string.no_driver_title));
+	}
+	
 	public List<ClientDriver> getActiveDrivers() {
 		return activeDrivers;
 	}
@@ -57,10 +80,6 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 			for (int i = 0; i < activeDrivers.size(); i++) {
 				driverNames[i] = activeDrivers.get(i).getName();
 			}
-		}
-		if (isTest()) {
-			Log.i(TAG, "Initializing the bid again, since we are in test mode, and we need the drivers initalized");
-			initializeBid();
 		}
 	}
 	
@@ -85,24 +104,72 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	}
 	
 	public ClientBid getBid() {
+		validateRaceSelected();
+		if (bid != null) return bid;
+		
+		ObjectInputStream ois = null;
+		try {
+			FileInputStream fis = openFileInput(getCurrentRace().getId()+BID_SUFFIX);
+			ois = new ObjectInputStream(fis);
+			bid = (ClientBid) ois.readObject();
+		} catch (FileNotFoundException e) {
+			Log.i(TAG, "No previous bid was found. Creating a new bid");
+			initializeBid();
+		} catch (Exception e) {
+			Log.e(TAG, "could not read bid, even though the file existed in the phone", e);
+		} finally {
+			if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException ioe) {
+					Log.e(TAG, "Could not close ois", ioe);
+				}
+			}
+		}
 		return bid;
 	}
 	
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		resetCredentials();
-		prefs.registerOnSharedPreferenceChangeListener(this);
-		printPrefs();
+	public void removeBid() {
+		validateRaceSelected();
+		if (bid == null) return;
 		
-		NO_DRIVER = new ClientDriver();
-		NO_DRIVER.setName(getString(R.string.no_driver_title));
+		deleteFile(getCurrentRace().getId()+BID_SUFFIX);
+		bid = null;
+	}
+	
+	public void persistBid() {
+		try {
+			validateRaceSelected();
+		} catch (IllegalStateException ignore) {
+			return;
+		}
+		if (bid == null) return;
 		
-		initializeBid();
+		ObjectOutputStream oos = null;
+		try {
+			Log.i(TAG, "Persisting bid");
+			FileOutputStream fos = openFileOutput(getCurrentRace().getId()+BID_SUFFIX, MODE_PRIVATE);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(bid);
+		} catch (IOException e) {
+			Log.e(TAG, "Could not persist bid", e);
+		} finally {
+			if (oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Could not close the bid file", e);
+				}
+			}
+		}
+	}
+
+	private void validateRaceSelected() {
+		if (getCurrentRace() == null) throw new IllegalStateException("If there is no race, there is no bid!");
 	}
 
 	private void initializeBid() {
+		bid = new ClientBid();
 		bid.setGrid(getDriverArray(6));
 		bid.setFastestLap(getDriver(0));
 		bid.setPodium(getDriverArray(3));
@@ -173,6 +240,14 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 		return prefs.getBoolean(LOGGED_IN, false);
 	}
 	
+	public List<ClientWBCEntry> getWbcEntries() {
+		return wbcEntries;
+	}
+
+	public void setWbcEntries(List<ClientWBCEntry> wbcEntries) {
+		this.wbcEntries = wbcEntries;
+	}
+	
 	private void printPrefs() {
 		Map<String, ?> preferences = prefs.getAll();
 		Log.i(TAG, "Number of prefs: " + preferences.size());
@@ -235,7 +310,6 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 		}
 	}
 	
-
 	public ClientRace getCurrentRace() {
 		return currentRace;
 	}

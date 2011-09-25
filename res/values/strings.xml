@@ -3,6 +3,9 @@
     <string name="hello">Hello World, F2011!</string>
     <string name="app_name">F2011</string>
     <string name="settings_label">Indstillinger</string>
+    <string name="loading_label">Henter løbet. Vent venligst...</string>
+    <string name="loading_wbc_label">Henter WBC stillingen. Vent venligst...</string>
+    <string name="loading_wbc_player_label">Henter %s. Vent venligst...</string>
     <string name="error_label">Fejl opstået</string>
     <string name="exit_label">Afslut</string>
     <string name="refresh_label">Genindlæs</string>
@@ -46,4 +49,6 @@
     <string name="label.minutes">Minutter</string>
     <string name="label.seconds">Sekunder</string>
     <string name="label.thousands">Tusindedele</string>
+    
+    <string name="wbc.title">WBC</string>
 </resources>

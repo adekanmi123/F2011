@@ -111,6 +111,7 @@ public class PolePositionActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			Toast.makeText(PolePositionActivity.this, getString(R.string.bid_submitted), Toast.LENGTH_LONG).show();
+			getF2011Application().removeBid();
 			startActivity(getNextIntent());
 		}
 	}

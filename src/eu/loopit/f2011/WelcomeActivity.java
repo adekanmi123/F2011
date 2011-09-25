@@ -3,6 +3,7 @@ package eu.loopit.f2011;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +33,8 @@ public class WelcomeActivity extends BaseActivity {
 	private TextView message;
 	private Button participateButton;
 	private boolean publicMessageFailed;
+	private ProgressDialog waitingDialog;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,6 @@ public class WelcomeActivity extends BaseActivity {
 		race = (TextView) findViewById(R.id.race);
 		message = (TextView) findViewById(R.id.message);
 		participateButton = (Button) findViewById(R.id.participate);
-		
 		participateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startActivity(new Intent(WelcomeActivity.this, GridActivity.class));
@@ -108,6 +111,11 @@ public class WelcomeActivity extends BaseActivity {
 	}
 	
 	private void getGameData() {
+		if (getF2011Application().getCurrentRace() == null) {
+			if (waitingDialog == null || waitingDialog.isShowing() == false) {
+				waitingDialog = ProgressDialog.show(this, "", getString(R.string.loading_label), true);
+			}
+		}
 		if ("".equals(seasonName.getText())) {
 			new GetSeasonNameTask().execute();
 		} else if (getF2011Application().isLoggedIn() && getF2011Application().getCurrentRace() == null) {
@@ -141,6 +149,7 @@ public class WelcomeActivity extends BaseActivity {
 		protected void onPostExecute(ClientRace result) {
 			if (result != null) {
 				setCurrentRace(result);
+				if (waitingDialog != null && waitingDialog.isShowing()) waitingDialog.dismiss();
 			} else {
 				if (publicMessageFailed == false) {
 					new AlertDialog.Builder(WelcomeActivity.this)
@@ -183,10 +192,22 @@ public class WelcomeActivity extends BaseActivity {
 					.setMessage(R.string.get_season_failure)
 					.setPositiveButton(R.string.label_ok, new OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-						}
+					}
 					}).show();
 			}
 		}
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (velocityX < 0) {
+    		Intent intent = new Intent(this, WbcActivity.class);
+    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        	startActivity(intent);
+        	return true;
+        }
+        return false;
 	}
 
 }

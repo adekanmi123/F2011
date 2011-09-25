@@ -6,6 +6,13 @@ import dk.bregnvig.formula1.client.domain.ClientDriver;
 public class FirstCrashActivity extends DriverActivity {
 
 	private ClientDriver[] drivers = new ClientDriver[1];
+	
+	
+	@Override
+	protected void onPause() {
+		updateBid();
+		super.onPause();
+	}
 
 	@Override
 	ClientDriver[] getDrivers() {
@@ -15,13 +22,13 @@ public class FirstCrashActivity extends DriverActivity {
 
 	@Override
 	Intent getNextIntent() {
-		getF2011Application().getBid().setFirstCrash(drivers[0]);
+		updateBid();
 		return new Intent(this, PolePositionActivity.class);
 	}
 
 	@Override
 	Intent getPreviousIntent() {
-		getF2011Application().getBid().setFirstCrash(drivers[0]);
+		updateBid();
 		Intent intent = new Intent(this, SelectedDriverActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -33,4 +40,8 @@ public class FirstCrashActivity extends DriverActivity {
 		return getString(R.string.first_crash_title);
 	}
 
+	private void updateBid() {
+		getF2011Application().getBid().setFirstCrash(drivers[0]);
+	}
+	
 }

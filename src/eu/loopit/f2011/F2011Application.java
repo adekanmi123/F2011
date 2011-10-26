@@ -31,6 +31,7 @@ import dk.bregnvig.formula1.client.domain.wbc.ClientWBCEntry;
 import eu.loopit.f2011.util.Base64Coder;
 import eu.loopit.f2011.util.CommunicationException;
 import eu.loopit.f2011.util.RestHelper;
+import eu.loopit.f2011.welcome.WelcomeActivity;
 
 public class F2011Application extends Application implements OnSharedPreferenceChangeListener{
 	

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="eu.loopit.f2011"
-      android:versionCode="7"
-      android:versionName="1.5.0">
+      android:versionCode="8"
+      android:versionName="1.6.0">
     <application android:icon="@drawable/trophy_icon" android:label="@string/app_name" android:name=".F2011Application">
-        <activity android:name=".WelcomeActivity"
+        <activity android:name=".welcome.WelcomeActivity"
                   android:label="@string/app_name"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:screenOrientation="portrait"
@@ -21,7 +21,6 @@
     	<activity android:name=".SelectedDriverActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
     	<activity android:name=".FirstCrashActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
     	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
-    	<activity android:name=".WbcActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
     	<activity android:name=".WbcPlayerActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>

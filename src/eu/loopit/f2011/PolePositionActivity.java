@@ -15,6 +15,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import eu.loopit.f2011.util.RestHelper;
 import eu.loopit.f2011.util.Validator;
+import eu.loopit.f2011.welcome.WelcomeActivity;
 
 public class PolePositionActivity extends BaseActivity {
 	

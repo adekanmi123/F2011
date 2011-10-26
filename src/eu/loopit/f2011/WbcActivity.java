@@ -90,17 +90,4 @@ public class WbcActivity extends BaseActivity {
 		intent.putExtra(WbcPlayerActivity.PLAYER_NAME, entry.getPlayer().getPlayername());
     	return intent;
 	}
-
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (velocityX > 0) {
-    		Intent intent = new Intent(this, WelcomeActivity.class);
-    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    		startActivity(intent);
-        	return true;
-        }
-        return false;
-	}
-	
 }

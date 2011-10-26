@@ -2,6 +2,7 @@ package eu.loopit.f2011;
 
 import android.content.Intent;
 import dk.bregnvig.formula1.client.domain.ClientDriver;
+import eu.loopit.f2011.welcome.WelcomeActivity;
 
 public class GridActivity extends DriverActivity {
 	

@@ -16,8 +16,8 @@ import eu.loopit.f2011.util.RestHelper;
 
 public class WbcPlayerActivity extends BaseActivity {
 
-	static final String NAME = "NAME";
-	static final String PLAYER_NAME = "PLAYER_NAME";
+	public static final String NAME = "NAME";
+	public static final String PLAYER_NAME = "PLAYER_NAME";
 	
 	public static final String TAG = WbcPlayerActivity.class.getSimpleName();
 	private TextView title;

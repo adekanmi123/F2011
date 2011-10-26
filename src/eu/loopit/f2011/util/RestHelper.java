@@ -16,6 +16,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.util.Log;
 
@@ -87,7 +90,10 @@ public class RestHelper {
 	
 	@SuppressWarnings("unchecked")
 	public <T> T getJSONData(String url, Class<T> clazz) {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpParams params = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(params, 5000);
+		HttpConnectionParams.setSoTimeout(params, 5000);
+		DefaultHttpClient httpClient = new DefaultHttpClient(params);
 		URI uri;
 		long start = System.currentTimeMillis();
 		try {

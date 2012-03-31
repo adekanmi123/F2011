@@ -1,13 +1,13 @@
 package eu.loopit.f2011;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.GestureDetector;
 
 public abstract class BaseActivity extends Activity {
 
-	GestureDetector detector;
-	
+	protected ProgressDialog waitingDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,4 +22,13 @@ public abstract class BaseActivity extends Activity {
 	public F2011Application getF2011Application() {
 		return (F2011Application) super.getApplication();
 	}
+	
+	protected void openLoadingDialog(String text) {
+		waitingDialog = ProgressDialog.show(this, "", text, true);
+	}
+	
+	protected void closeLoadingDialog() {
+		if (waitingDialog != null && waitingDialog.isShowing()) waitingDialog.dismiss();
+	}
+
 }

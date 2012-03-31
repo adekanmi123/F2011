@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.loopit.f2011.view.TypeFaceTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="@style/CodeFont"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+	android:textStyle="bold"    
+	android:textSize="20sp"
+/>

@@ -22,6 +22,7 @@
     	<activity android:name=".FirstCrashActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
     	<activity android:name=".PolePositionActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
     	<activity android:name=".WbcPlayerActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
+    	<activity android:name=".BidPlayerActivity" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"/>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-sdk android:minSdkVersion="8" />

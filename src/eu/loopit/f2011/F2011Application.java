@@ -18,6 +18,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -56,7 +58,7 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	private List<ClientWBCEntry> wbcEntries = new ArrayList<ClientWBCEntry>();
 	private String[] driverNames;
 	private ClientBid bid;
-
+	private Bitmap defaultDriverImage;
 	
 	@Override
 	public void onCreate() {
@@ -72,6 +74,14 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	
 	public List<ClientDriver> getActiveDrivers() {
 		return activeDrivers;
+	}
+	
+	
+	public Bitmap getDefaultDriverImage() {
+		if (defaultDriverImage == null) {
+			defaultDriverImage = BitmapFactory.decodeResource(getResources(), R.drawable.unknown); 
+		}
+		return defaultDriverImage;
 	}
 
 	public void setActiveDrivers(List<ClientDriver> activeDrivers) {

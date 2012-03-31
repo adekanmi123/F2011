@@ -3,9 +3,9 @@
     <string name="hello">Hello World, F2011!</string>
     <string name="app_name">F2011</string>
     <string name="settings_label">Indstillinger</string>
-    <string name="loading_label">Henter løbet. Vent venligst...</string>
-    <string name="loading_wbc_label">Henter WBC stillingen. Vent venligst...</string>
-    <string name="loading_wbc_player_label">Henter %s. Vent venligst...</string>
+    <string name="loading_label">Henter løbet. Vent venligst…</string>
+    <string name="loading_wbc_label">Henter WBC stillingen. Vent venligst…</string>
+    <string name="loading_wbc_player_label">Henter %s. Vent venligst…</string>
     <string name="error_label">Fejl opstået</string>
     <string name="exit_label">Afslut</string>
     <string name="refresh_label">Genindlæs</string>
@@ -23,8 +23,10 @@
     <string name="game_waiting">Spillet er ikke åbent endnu</string>
     <string name="game_season_closed">Denne sæson er afsluttet. Kom tilbage næste år!</string>
     <string name="get_season_failure">Sæsonen kunne ikke hentes</string>
+    <string name="get_other_players_failure">Kunne ikke hente de andre spillere</string>
     <string name="bid_submitted">Dit bud er modtaget!</string>
     <string name="participate_button">Jeg skal deltage</string>
+    <string name="players_button">Se bud</string>
     <string name="label_ok">OK</string>
     <string name="grid.title">Start grid</string>
     <string name="fastestLap.title">Hurtigste kører</string>
@@ -51,4 +53,5 @@
     <string name="label.thousands">Tusindedele</string>
     
     <string name="wbc.title">WBC</string>
+    <string name="players_bid_title">Bud</string>
 </resources>

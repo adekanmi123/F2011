@@ -3,17 +3,20 @@ package eu.loopit.f2011;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.gson.reflect.TypeToken;
 
 import dk.bregnvig.formula1.client.domain.ClientPlayer;
 import eu.loopit.f2011.util.RestHelper;
-import eu.loopit.f2011.welcome.MainView;
 
 public class BidPlayersActivity extends BaseActivity {
 
@@ -36,31 +39,43 @@ public class BidPlayersActivity extends BaseActivity {
 		adapter = new BidAdapter(this);
 
 		list.setAdapter(adapter);
-		title.setText(getIntent().getExtras().getString(NAME));
-		openLoadingDialog(getString(R.string.players_bid_title));
+		list.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				startActivity(getBidPlayerIntent(players.get(position) ));
+			}
+		});
+		title.setText(getString(R.string.players_bid_title));
+		openLoadingDialog(getString(R.string.loading_bids));
 		new PlayersTask().execute();
 	}
 	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		closeLoadingDialog();
+	
+	private Intent getBidPlayerIntent(ClientPlayer player) {
+		Intent intent = new Intent(this, BidPlayerActivity.class);
+		intent.putExtra(WbcPlayerActivity.NAME, player.getName());
+		intent.putExtra(WbcPlayerActivity.PLAYER_NAME, player.getPlayername());
+    	return intent;
 	}
 
-	private class PlayersTask extends AsyncTask<Void, Void, List<ClientPlayer>> {
+	private class PlayersTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
-		protected List<ClientPlayer> doInBackground(Void... params) {
+		protected Void doInBackground(Void... params) {
+			names = null;
 			RestHelper helper = new RestHelper(getF2011Application());
-			List<ClientPlayer> players = helper.getJSONData("/race?players", ClientPlayer.class, new TypeToken<List<ClientPlayer>>(){}.getType());
+			BidPlayersActivity.this.players = helper.getJSONData("/race?players", ClientPlayer.class, new TypeToken<List<ClientPlayer>>(){}.getType());
+			names = new ArrayList<String>(BidPlayersActivity.this.players.size());
+			for (ClientPlayer player : BidPlayersActivity.this.players) {
+				names.add(player.getName());
+			}
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(List<ClientPlayer> result) {
-			if (result == null) return;
+		protected void onPostExecute(Void dd) {
 			if (names != null) {
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(BidPlayersActivity.this, R.layout.player, names);
-				((ListView)MainView.this.mainView.findViewById(R.id.players)).setAdapter(adapter);
+				list.setAdapter(adapter);
 			}
 			closeLoadingDialog();
 		}

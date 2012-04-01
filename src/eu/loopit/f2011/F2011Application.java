@@ -244,7 +244,7 @@ public class F2011Application extends Application implements OnSharedPreferenceC
 	}
 
 	public boolean isTest() {
-		return "sdk".equals(Build.PRODUCT);
+		return Build.PRODUCT.contains("sdk");
 	}
 	
 	public boolean isLoggedIn() {

@@ -63,6 +63,7 @@ public class RestHelper {
 				method.setHeader("Authorization", "Basic " + application.getToken());
 			}
 			HttpEntity entity = new StringEntity(gson.toJson(body));
+			if (Log.isLoggable(TAG, Log.INFO)) Log.i(TAG, "Body: " + gson.toJson(body));
 			method.setEntity(entity);
 			HttpResponse response = httpClient.execute(method);
 			if (response.getStatusLine().getStatusCode() == 200 || response.getStatusLine().getStatusCode() == 201) {
@@ -76,11 +77,12 @@ public class RestHelper {
 				}
 			} else {
 				Log.i(TAG, "HttpPost did not succeed. Status: " + response.getStatusLine());
-				throw new RestException(response.getStatusLine().toString());
+				throw new RestException(response.getStatusLine().getStatusCode());
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not get URL: " + baseURL + url, e);
-			throw new IllegalStateException("Could not perform GET request to URL: " + baseURL + url, e);
+			if (e instanceof RestException) throw (RestException)e;
+			throw new IllegalStateException("Could not perform POST request to URL: " + baseURL + url, e);
 		} finally {
 			if (Log.isLoggable(TAG, Log.INFO)) {
 				Log.i(TAG, String.format("%s took %d ms to post and deserialize", url, (System.currentTimeMillis() - start)));

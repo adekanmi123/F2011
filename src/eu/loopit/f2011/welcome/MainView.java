@@ -10,24 +10,18 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
 import dk.bregnvig.formula1.client.domain.ClientDriver;
-import dk.bregnvig.formula1.client.domain.ClientPlayer;
 import dk.bregnvig.formula1.client.domain.ClientRace;
-import eu.loopit.f2011.BidPlayerActivity;
 import eu.loopit.f2011.BidPlayersActivity;
 import eu.loopit.f2011.GridActivity;
 import eu.loopit.f2011.PageView;
 import eu.loopit.f2011.Preferences;
 import eu.loopit.f2011.R;
-import eu.loopit.f2011.WbcPlayerActivity;
 import eu.loopit.f2011.util.RestHelper;
 
 public class MainView implements PageView {
@@ -70,13 +64,6 @@ public class MainView implements PageView {
 		});
 		new GetSeasonNameTask().execute();
 		
-		ListView list = (ListView) mainView.findViewById(R.id.players);
-        list.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				ClientPlayer player = players.get(position);
-				owner.startActivity(getBidPlayerIntent(player));
-			}
-		});
 		initialized = true;
 	}
 	
@@ -115,20 +102,13 @@ public class MainView implements PageView {
 			participateButton.setVisibility(View.VISIBLE);
 		} else if (currentRace.isParticipant() == true) {
 			playersButton.setVisibility(View.VISIBLE);
-			message.setText(owner.getString(R.string.game_already_played, currentRace.getName()));
+			message.setVisibility(View.GONE);
 		}
 		if (currentRace != null) {
 			race.setText(currentRace.getName());
 		}
 	}
-	
-	private Intent getBidPlayerIntent(ClientPlayer player) {
-		Intent intent = new Intent(owner, BidPlayerActivity.class);
-		intent.putExtra(WbcPlayerActivity.NAME, player.getName());
-		intent.putExtra(WbcPlayerActivity.PLAYER_NAME, player.getPlayername());
-    	return intent;
-	}
-	
+
 	private class InitiateRaceTask extends AsyncTask<Void, Void, ClientRace> {
 
 		@Override
@@ -136,7 +116,6 @@ public class MainView implements PageView {
 			if (publicMessageFailed) return null;
 			RestHelper helper = new RestHelper(owner.getF2011Application());
 			try {
-				names = null;
 				owner.getF2011Application().setActiveDrivers(helper.getJSONData("/race/drivers", ClientDriver.class, new TypeToken<List<ClientDriver>>(){}.getType()));
 				ClientRace result = helper.getJSONData("/race", ClientRace.class); 
 				return result;

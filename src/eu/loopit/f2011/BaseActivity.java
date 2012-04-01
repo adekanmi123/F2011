@@ -17,6 +17,7 @@ public abstract class BaseActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		getF2011Application().persistBid();
+		closeLoadingDialog();
 	}
 
 	public F2011Application getF2011Application() {

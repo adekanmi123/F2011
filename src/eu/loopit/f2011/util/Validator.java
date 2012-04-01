@@ -51,7 +51,7 @@ public class Validator {
 		return true;
 	}
 	
-	private void showError(String errorMessage) {
+	public void showError(String errorMessage) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(errorMessage)
 			.setNeutralButton(R.string.label_ok, new OnClickListener() {

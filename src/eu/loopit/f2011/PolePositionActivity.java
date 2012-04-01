@@ -1,5 +1,7 @@
 package eu.loopit.f2011;
 
+import org.apache.http.HttpStatus;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import eu.loopit.f2011.util.RestException;
 import eu.loopit.f2011.util.RestHelper;
 import eu.loopit.f2011.util.Validator;
 import eu.loopit.f2011.welcome.WelcomeActivity;
@@ -72,9 +75,11 @@ public class PolePositionActivity extends BaseActivity {
 		boolean result = validator.validateNumber(getString(R.string.label_minutes), minutes.getText().toString());
 		if (result) result = validator.validateNumber(getString(R.string.label_seconds), seconds.getText().toString());
 		if (result) result = validator.validateNumber(getString(R.string.label_thousands), thousands.getText().toString());
-		getF2011Application().getBid().setPolePositionTime(getPolePoistionTime());
-		submit.setEnabled(false);
-		if (result) new SubmitTask().execute();
+		if (result) {
+			getF2011Application().getBid().setPolePositionTime(getPolePoistionTime());
+			submit.setEnabled(false);
+			if (result) new SubmitTask().execute();
+		}
 	}
 	
 	private Intent getNextIntent() {
@@ -102,18 +107,29 @@ public class PolePositionActivity extends BaseActivity {
 	private class SubmitTask extends AsyncTask<Void, Void, Void> {
 		
 		private RestHelper helper = new RestHelper(getF2011Application());
+		private RestException exception;
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			helper.postJSONData(String.format("/bid"), getF2011Application().getBid(), Void.class);
+			try {
+				helper.postJSONData(String.format("/bid"), getF2011Application().getBid(), Void.class);
+			} catch (RestException e) {
+				exception = e;
+			}
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
-			Toast.makeText(PolePositionActivity.this, getString(R.string.bid_submitted), Toast.LENGTH_LONG).show();
-			getF2011Application().removeBid();
-			startActivity(getNextIntent());
+			if (exception != null && exception.getStatusCode() == HttpStatus.SC_PAYMENT_REQUIRED) {
+				validator.showError(PolePositionActivity.this.getString(R.string.error_not_enough_money));
+			} else if (exception != null) {
+				validator.showError(PolePositionActivity.this.getString(R.string.error_server, exception.getStatusCode()));
+			} else {
+				Toast.makeText(PolePositionActivity.this, getString(R.string.bid_submitted), Toast.LENGTH_LONG).show();
+				getF2011Application().removeBid();
+				startActivity(getNextIntent());
+			}
 		}
 	}
 	

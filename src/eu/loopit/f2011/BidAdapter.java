@@ -23,7 +23,7 @@ public class BidAdapter extends ArrayAdapter<Object> {
 	public static final String TAG = BidAdapter.class.getSimpleName();
 	private BitmapManager imageManager;
 	private F2011Application application;
-	private static Map<Integer, CharSequence> separator = new HashMap<Integer, CharSequence>();
+	private static Map<Integer, CharSequence> separator;
 	private static Set<Integer> textViewPosition;
 	private Bitmap defaultImage;
 	
@@ -53,6 +53,7 @@ public class BidAdapter extends ArrayAdapter<Object> {
 
 	private void initializeTextViewPosistion() {
 		if (separator == null) {
+			separator = new HashMap<Integer, CharSequence>();
 			separator.put(0, application.getResources().getText(R.string.grid_title));
 			separator.put(6, application.getResources().getText(R.string.fastestLap_title));
 			separator.put(7, application.getResources().getText(R.string.podium_title));
@@ -83,10 +84,9 @@ public class BidAdapter extends ArrayAdapter<Object> {
 	    }
 	    Integer objectPosition = new Integer(position);
 	    TextView separatorView = (TextView) view.findViewById(R.id.separator); 
-//    	separatorView.setVisibility(separator.containsKey(objectPosition) ? View.VISIBLE : View.GONE);
-    	separatorView.setVisibility(View.VISIBLE);
+    	separatorView.setVisibility(separator.containsKey(objectPosition) ? View.VISIBLE : View.GONE);
     	view.findViewById(R.id.driver).setVisibility(textViewPosition.contains(objectPosition) ? View.GONE : View.VISIBLE);
-    	TextView textOnlyView = (TextView) view.findViewById(android.R.id.text1); 
+    	TextView textOnlyView = (TextView) view.findViewById(R.id.textOnly); 
     	textOnlyView.setVisibility(textViewPosition.contains(objectPosition) ? View.VISIBLE : View.GONE);
     	if (separator.containsKey(objectPosition)) {
     		separatorView.setText(separator.get(objectPosition));

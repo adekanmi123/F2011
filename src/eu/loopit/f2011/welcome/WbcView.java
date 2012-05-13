@@ -66,7 +66,6 @@ public class WbcView implements PageView{
 				owner.startActivity(getWBCPlayerIntent(entry));
 			}
 		});
-        load();
         initialized = true;
 	}
 	
